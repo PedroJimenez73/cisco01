@@ -1,0 +1,12 @@
+<form [formGroup]="form">
+    <label class="respuesta" *ngFor="let answer of pregunta.answers; let i = index">
+        <input class="m-r-small" type="radio" formControlName="answerRadio" value="{{abcAnswers[i]}}">
+            <span class="ball-outline">{{abcAnswers[i]}}</span>
+            {{answer}}
+    </label>
+</form>
+<div class="botonera">
+    <button *ngIf="preguntaIndex !== 0" class="outline" (click)="changeQuestion(-1)">Anterior</button>
+    <button *ngIf="preguntaIndex !== (preguntas.length - 1)"class="m-l-small outline" (click)="changeQuestion(1)">Siguiente</button>
+    <button *ngIf="preguntaIndex === (preguntas.length - 1)"class="m-l-small outline" (click)="changeQuestion(0)">Finalizar</button>
+</div>

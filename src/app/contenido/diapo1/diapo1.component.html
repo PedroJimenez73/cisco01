@@ -1,0 +1,111 @@
+<div class="contenedor condicional">
+    <div class="row">
+        <div class="col-100">
+            <div *ngIf="showPortada" class="actividades mostrada">
+                <h1>{{data.titulo}}</h1>
+                <p>Selecciona el número de preguntas y se mostrará el tiempo disponible para contestarlas.</p>
+                <form [formGroup]="selectPreguntas" class="inline-form">
+                    <label>Nº Preguntas</label>
+                    <select formControlName="numPreguntas">
+                        <option value=10>10</option>
+                        <option value=20>20</option>
+                        <option value=30>30</option>
+                        <option value=40>40</option>
+                        <option value=50>50</option>
+                    </select>
+                    <img *ngIf="milisegundos" src="assets/clock.svg" alt="">
+                    <label *ngIf="milisegundos !== 0"> {{milisegundos / 1000 / 60}} <span *ngIf="milisegundos">Minutos</span></label>
+                </form>
+                <p *ngIf="milisegundos">Para superar la evaluación debes contestar correctamente al menos el 80% de las preguntas. A continuación pulsa en Iniciar y una vez finalizadas todas las preguntas podrás comprobar los resultados.</p>
+                <div class="botonera">
+                    <button class="outline" *ngIf="!intentoAnterior && milisegundos > 0" (click)="startEvaluation()">Iniciar</button>
+                </div>
+            </div>
+            <div *ngIf="showQuestions" class="actividades mostrada">
+                <p class="control">
+                    RESTANTES 
+                    <span class="number m-l-small">{{preguntas.length - (preguntaIndex + 1)}}</span>
+                    <img class="m-l-small" src="assets/clock.svg" alt="">
+                    <span class="number m-l-small">{{milisegundos | reloj}}</span>
+                </p>
+                <h3><span class="ball">{{preguntaIndex + 1}}</span> {{pregunta.question}}</h3>
+                <p *ngIf="pregunta.pic !== null">
+                    <img class="esquema" [src]="pregunta.pic">
+                </p>
+                <hr>
+                <app-simple *ngIf="pregunta.type === 'simple'" [pregunta]="pregunta"
+                            [preguntaIndex]="preguntaIndex"
+                            [preguntas]="preguntas"
+                            [results]="results"
+                            (result)="saveResult($event)"></app-simple>
+                <app-multi *ngIf="pregunta.type === 'multi'" [pregunta]="pregunta"
+                            [preguntaIndex]="preguntaIndex"
+                            [preguntas]="preguntas"
+                            [results]="results"
+                            (result)="saveResult($event)"></app-multi>
+                <app-drag-drop *ngIf="pregunta.type === 'drag'" [pregunta]="pregunta"
+                            [preguntaIndex]="preguntaIndex"
+                            [preguntas]="preguntas"
+                            [results]="results"
+                            (result)="saveResult($event)"></app-drag-drop>
+            </div>
+            <div *ngIf="showResults" class="actividades mostrada">
+                <h1>Resultados evaluación</h1>
+                <div class="row">
+                    <div class="col-50">
+                        <p>Preguntas acertadas {{totalAciertos}}/{{preguntas.length}}</p>
+                        <p>
+                            <span class="mini-fila">
+                                <span>Resultado {{ porcentAciertos }}%</span> 
+                                <span class="mini-fila" style="color: #008489" *ngIf="porcentAciertos >= 80">
+                                    <img src="assets/check-circle.svg" alt=""> <span>Pass</span>
+                                </span> 
+                                <span class="mini-fila" style="color: #8f0404" *ngIf="porcentAciertos < 80">
+                                    <img src="assets/x-circle.svg" alt=""> <span>Not pass</span>
+                                </span>
+                            </span>
+                        </p>
+                        <p *ngIf="porcentAciertos < 80">Lo sentimos, no has superado la evaluación, para ello debes tener al menos el 80% de las preguntas correctas. Te recomendamos a continuación comprobar los  resultados obtenidos y posteriormente realizar otro intento para continuar practicando.</p>
+                        <p *ngIf="porcentAciertos >= 80">Enhorabuena, has superado la evaluación. Te recomendamos a continuación comprobar los resultados obtenidos y posteriormente realizar otro intento para continuar practicando.</p>
+                    </div>
+                    <div class="col-50">
+                        <canvas baseChart
+                                [data]="doughnutChartData"
+                                [labels]="doughnutChartLabels"
+                                [options]="doughnutChartOptions"
+                                [chartType]="doughnutChartType"
+                                [colors]="doughnutChartColors">
+                        </canvas>
+                    </div>
+                </div>
+                <hr>
+                <div class="botonera">
+                    <button class="m-l-small outline" (click)="seeFeedback()">Ver resultados</button>
+                </div>
+            </div>
+            <div *ngIf="showFeedback" class="actividades mostrada">
+                <app-simple-feedback *ngIf="pregunta.type === 'simple'" 
+                                    [pregunta]="pregunta"
+                                    [preguntaIndex]="preguntaIndex"
+                                    [preguntas]="preguntas"
+                                    [results]="results"
+                                    [successes]="successes"
+                                    (navFeedback)="changeFeedback($event)"></app-simple-feedback>
+                <app-multi-feedback *ngIf="pregunta.type === 'multi'"
+                                    [pregunta]="pregunta"
+                                    [preguntaIndex]="preguntaIndex"
+                                    [preguntas]="preguntas"
+                                    [results]="results"
+                                    [successes]="successes"                               
+                                    (navFeedback)="changeFeedback($event)"></app-multi-feedback>
+                <app-drag-drop-feedback *ngIf="pregunta.type === 'drag'" 
+                                        [pregunta]="pregunta"
+                                        [preguntaIndex]="preguntaIndex"
+                                        [preguntas]="preguntas"
+                                        [results]="results"
+                                        [successes]="successes"                               
+                                        (navFeedback)="changeFeedback($event)"></app-drag-drop-feedback>
+            </div>
+        </div>
+    </div>
+</div>

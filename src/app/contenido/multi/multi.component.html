@@ -1,0 +1,12 @@
+<form [formGroup]="form">
+    <label  class="respuesta" formArrayName="answers" *ngFor="let answer of form.controls.answers.controls; let i = index">
+        <input class="m-r-small" type="checkbox" [formControlName]="i">
+            <span class="ball-outline">{{abcAnswers[i]}}</span>
+            {{pregunta.answers[i]}}
+    </label>
+</form>
+<div class="botonera">
+    <button *ngIf="preguntaIndex !== 0" class="outline" (click)="changeQuestion(-1)">Anterior</button>
+    <button *ngIf="preguntaIndex !== (preguntas.length - 1)" class="m-l-small outline" (click)="changeQuestion(1)">Siguiente</button>
+    <button *ngIf="preguntaIndex === (preguntas.length - 1)" class="m-l-small outline" (click)="changeQuestion(0)">Finalizar</button>
+</div>

@@ -1,0 +1,29 @@
+<h3>
+    <span class="ball">{{preguntaIndex + 1}}</span> {{pregunta.question}}
+</h3>
+<p style="width: 100%; text-align: center;">
+    <span class="correcta mini-fila" *ngIf="questionCorrecta">
+        <img src="assets/check-circle.svg" alt=""><span>CORRECTA</span>
+    </span>
+    <span class="incorrecta mini-fila" *ngIf="questionIncorrecta">
+        <img src="assets/x-circle.svg" alt=""><span>INCORRECTA</span>
+    </span>
+</p>
+<p *ngIf="pregunta.pic !== null">
+    <img class="esquema" [src]="pregunta.pic">
+</p>
+<hr>
+<form [formGroup]="form">
+    <label  #labelsRef class="respuesta" formArrayName="answers" *ngFor="let answer of form.controls.answers.controls; let i = index">
+        <input disabled class="m-r-small" type="checkbox" [formControlName]="i">
+            <span class="ball-outline">{{abcAnswers[i]}}</span>
+            {{pregunta.answers[i]}}
+    </label>
+</form>
+<hr>
+<h3>Explanation</h3>
+<p style="font-size: 1em" *ngFor="let feedbackLine of pregunta.feedback">{{feedbackLine}}</p>
+<div class="botonera">
+    <button *ngIf="preguntaIndex !== 0" class="outline" (click)="changeFeedback(-1)"><img src="assets/left.svg"></button>
+    <button *ngIf="preguntaIndex !== (preguntas.length - 1)" class="m-l-small outline" (click)="changeFeedback(1)"><img src="assets/right.svg"></button>
+</div>

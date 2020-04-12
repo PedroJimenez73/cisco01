@@ -1,0 +1,47 @@
+<div class="contenedor condicional">
+    <div class="row">
+        <div class="col-100">
+            <div class="actividades mostrada">
+                <h1>Estadísticas</h1>
+                <p *ngIf="intentos.length === 0">Aún no se ha realizado ningún intento.</p>
+                <p *ngIf="intentos.length > 0">Total intentos {{intentos.length}}</p>
+                <p *ngIf="intentos.length > 0">Superados {{totalPassed}}</p>
+                <hr>
+                <table *ngIf="intentos.length > 0">
+                    <tr *ngFor="let intento of intentos">
+                        <td>
+                            <span class="mini-fila">
+                                <img src="assets/calendar.svg" alt="">
+                                <span>{{intento.fecha | date: "dd/MM/yyyy HH:mm"}}</span>
+                            </span>
+                        </td>
+                        <td>
+                            <span class="mini-fila">
+                                <img src="assets/file-text.svg" alt="">
+                                <span>{{intento.aciertos}}/{{intento.numPreguntas}}</span>
+                            </span>
+                        </td>
+                        <td>
+                            <span class="mini-fila">
+                                <img src="assets/line-chart.svg" alt="">
+                                <span>{{intento.porcentAciertos}} %</span>
+                            </span>
+                        </td>
+                        <td *ngIf="intento.porcentAciertos >= 80">
+                            <span class="mini-fila">
+                                <img src="assets/check-circle.svg" alt="">
+                                <span style="color: #008489">Pass</span>
+                            </span>
+                        </td>
+                        <td *ngIf="intento.porcentAciertos < 80">
+                            <span class="mini-fila">
+                                <img src="assets/x-circle.svg" alt="">
+                                <span style="color: #8f0404">Not pass</span>
+                            </span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

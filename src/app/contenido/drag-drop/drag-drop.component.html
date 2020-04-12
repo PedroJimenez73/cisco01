@@ -1,0 +1,19 @@
+<div class="dragable">
+    <div class="col-drag-boxes">
+        <div [id]="'caja' + i" class="drag-box" *ngFor="let boxDrag of pregunta.dragBoxes; let i = index;">
+            {{boxDrag}}
+        </div>
+    </div>
+    <div class="col-drop-boxes">
+        <div *ngFor="let box of pregunta.dropBoxes; let i = index">
+            <div class="title">{{box.name}}
+            </div>
+            <div  #dropBoxesRef [id]="'cajon' + i + j" class="drop-box" *ngFor="let boxDrop of box.boxes; let j = index;"></div>
+        </div>
+    </div>
+</div>
+<div class="botonera">
+    <button *ngIf="preguntaIndex !== 0" class="outline" (click)="changeQuestion(-1)">Anterior</button>
+    <button *ngIf="preguntaIndex !== (preguntas.length - 1)" class="m-l-small outline" (click)="changeQuestion(1)">Siguiente</button>
+    <button *ngIf="preguntaIndex === (preguntas.length - 1)" class="m-l-small outline" (click)="changeQuestion(0)">Finalizar</button>
+</div>
