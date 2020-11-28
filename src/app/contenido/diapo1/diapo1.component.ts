@@ -22,12 +22,12 @@ export class Diapo1Component implements OnInit {
     intento = { preguntas: [], resultados: [], aciertos: []};
     intentoAnterior = false;
     intentosHistory: any;
-    
+
     showPortada = true;
     showQuestions = false;
     showResults = false;
     showFeedback = false;
-    
+
     preguntas: any = [];
     preguntaIndex = 0;
     pregunta: any;
@@ -50,7 +50,7 @@ export class Diapo1Component implements OnInit {
         },
     }
     doughnutChartColors = [];
-  
+
     constructor(private preguntasService: PreguntasService,
                 private bypassService: BypassService,
                 private ff: FormBuilder) { }
@@ -66,25 +66,23 @@ export class Diapo1Component implements OnInit {
         });
         this.selectPreguntas.valueChanges.subscribe((data) => {
             this.numPreguntas = Number(data.numPreguntas);
-            console.log(this.numPreguntas)
             this.milisegundos = this.numPreguntas * 180 * 1000;
-            console.log(this.milisegundos)
         });
     }
 
     setPreguntas() {
         this.preguntasMaster = this.preguntasService.getPreguntas();
-        this.preguntasDrag = this.preguntasService.getPreguntasDrag();
+        // this.preguntasDrag = this.preguntasService.getPreguntasDrag();
         let preguntaIt;
-        let preguntaItDrag;
-        for (let i=0; i < (this.numPreguntas * 0.8); i++) {
+        // let preguntaItDrag;
+        for (let i=0; i < (this.numPreguntas); i++) {
             preguntaIt = this.preguntasMaster.splice((Math.floor(Math.random() * (this.preguntasMaster.length - i - 1))), 1)
             this.preguntas.push(preguntaIt[0]);
         }
-        for (let i=0; i < (this.numPreguntas * 0.2); i++) {
-            preguntaItDrag = this.preguntasDrag.splice((Math.floor(Math.random() * (this.preguntasDrag.length - i - 1))), 1)
-            this.preguntas.push(preguntaItDrag[0]);
-        }
+        // for (let i=0; i < (this.numPreguntas * 0.2); i++) {
+        //     preguntaItDrag = this.preguntasDrag.splice((Math.floor(Math.random() * (this.preguntasDrag.length - i - 1))), 1)
+        //     this.preguntas.push(preguntaItDrag[0]);
+        // }
     }
 
     startEvaluation() {
@@ -119,7 +117,6 @@ export class Diapo1Component implements OnInit {
         if(event.finished) {
             this.finishQuestions()
         }
-        console.log(this.results);
         this.scrollUp();
     }
 
@@ -138,7 +135,7 @@ export class Diapo1Component implements OnInit {
         window.ScormProcessSetValue("cmi.score.raw", this.porcentAciertos);
         window.ScormProcessSetValue("cmi.score.min", "0");
         window.ScormProcessSetValue("cmi.score.max", "100");
-        
+
         if (this.porcentAciertos >= 80){
             window.ScormProcessSetValue("cmi.success_status", "passed");
         }
@@ -167,7 +164,7 @@ export class Diapo1Component implements OnInit {
         const scrollToTop = window.setInterval(() => {
             const pos = window.pageYOffset;
             if (pos > 0) {
-                window.scrollTo(0, pos - 20); 
+                window.scrollTo(0, pos - 20);
             } else {
                 window.clearInterval(scrollToTop);
             }

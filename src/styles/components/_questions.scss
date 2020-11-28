@@ -21,7 +21,7 @@
             font-size: 1.2rem;
             color: $font-color;
         }
-    
+
     }
 
     h3 {
@@ -48,9 +48,14 @@
     }
 
     img.esquema {
-        display: block; 
-        max-width: 100%; 
-        margin: 0 auto;
+        display: block;
+        max-width: 100%;
+        margin: 20px auto 10px;
+        border-radius: 4px;
+        box-shadow: 4px 4px 8px rgba(50, 50, 93, 0.1),
+                    -4px 4px 8px rgba(50, 50, 93, 0.1),
+                    4px -4px 8px rgba(50, 50, 93, 0.1),
+                    -4px -4px 8px rgba(50, 50, 93, 0.1);
     }
 
     .respuesta {
@@ -61,7 +66,7 @@
             background-color: #f2f2f2;
         }
     }
-    
+
     input[type="radio"],
     input[type="checkbox"] {
         width: 20px;
@@ -78,7 +83,7 @@
             opacity: 0;
         }
     }
-    
+
     label.correcta{
         color: $success-color;
 
@@ -129,7 +134,7 @@
         font-size: 12px;
         margin-right: 12px;
     }
-    
+
     .botonera {
         margin-top: 1em;
         @include flex(flex-end, center);
@@ -204,13 +209,13 @@
 
 .drag-drop {
     @include flex(space-around, center);
-    
+
     .drag, .drop {
         width: 40%;
         min-height: 400px;
         @include flex(center, center);
         flex-wrap: wrap;
-    
+
         img {
             border: 5px solid red;
             border-radius: 100px;
@@ -226,7 +231,7 @@
             margin: 1em 1em 2em;
             @include flex(center, center);
             position: relative;
-            
+
             div {
                 width: 150px;
                 position: absolute;
@@ -248,7 +253,7 @@
 
 @media (max-width: 440px) {
     .actividades {
-        
+
         .botonera {
             margin-top: 20px;
             display: flex;
@@ -261,20 +266,20 @@
                 margin-bottom: 20px;
             }
         }
-    } 
+    }
 }
 
 .inline-form {
     @include flex(flex-start, center);
-    
+
     label {
         width: auto;
         padding-left: 0;
         font-size: 1.3em;
         margin-right: 1em;
     }
-    
-    select, 
+
+    select,
     img {
         margin-right: 1em;
     }
@@ -306,7 +311,7 @@ select {
     color: #495057;
     padding: 5px 10px;
     border: 1px solid #495057;
-    border-radius: 20px; 
+    border-radius: 20px;
     margin-right: 5px;
     cursor: pointer;
 }
